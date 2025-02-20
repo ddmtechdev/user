@@ -1,0 +1,13 @@
+{
+    "name": "ddmtechdev/user",
+    "description": "User Management Module",
+    "type": "yii2-extension",
+    "require": {
+        "yiisoft/yii2": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "ddmtechdev\\user\\": ""
+        }
+    }
+}
