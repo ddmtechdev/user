@@ -1,6 +1,7 @@
 <h4>Installation</h4>
 
-<code>1. php composer require ddmtechdev/user:@dev
+<code>
+1. php composer require ddmtechdev/user:@dev
 2. Run migration: php yii migrate/up --migrationPath=@vendor/ddmtechdev/user/migrations
 3.  Open common/config/main.php and add this inside the modules array:
     'components' => [
