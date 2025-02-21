@@ -22,6 +22,34 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
+    public function beforeSave($insert)
+    {
+        if ($insert) {
+            $this->auth_key = Yii::$app->security->generateRandomString(); // Generate auth_key
+        }
+        return parent::beforeSave($insert);
+    }
+    
+    public function beforeValidate(){
+        if (parent::beforeValidate()) {
+            $errors = [];
+
+            if (self::find()->where(['username' => $this->username])->exists()) {
+                $errors['username'] = 'This username is already taken.';
+            }
+
+            if (self::find()->where(['email' => $this->email])->exists()) {
+                $errors['email'] = 'This email is already registered.';
+            }
+
+            if (!empty($errors)) {
+                $this->addErrors($errors);
+                return false; // Prevent saving
+            }
+            return true;
+        }
+    }
+
     public static function findIdentity($id)
     {
         return static::findOne($id);
