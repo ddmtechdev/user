@@ -1,6 +1,5 @@
 <?php
 namespace ddmtechdev\user\models;
-use ddmtechdev\auditlog\behaviors\AuditLogBehavior;
 
 use Yii;
 use yii\base\Model;
