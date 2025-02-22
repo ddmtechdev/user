@@ -59,25 +59,24 @@ class AdminController extends Controller
         return $this->render('create', ['model' => $model]);
     }
 
-    public function actionUpdate($id)
-    {
-        $model = User::findOne($id);
-        $model->scenario = 'update';
+    // public function actionUpdate($id)
+    // {
+    //     $model = User::findOne($id);
+    //     $model->scenario = 'update';
 
-        if (!$model) {
-            throw new NotFoundHttpException("User not found.");
-        }
+    //     if (!$model) {
+    //         throw new NotFoundHttpException("User not found.");
+    //     }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', 'User updated successfully.');
-            return $this->redirect(['index']);
-        }
+    //     if ($model->load(Yii::$app->request->post()) && $model->save()) {
+    //         Yii::$app->session->setFlash('success', 'User updated successfully.');
+    //         return $this->redirect(['index']);
+    //     }
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
+    //     return $this->render('update', [
+    //         'model' => $model,
+    //     ]);
+    // }
 
     public function actionDelete($id)
     {

@@ -7,12 +7,15 @@ use ddmtechdev\user\models\LoginForm;
 use ddmtechdev\user\models\SignupForm;
 use ddmtechdev\user\models\ForgotPasswordForm;
 use ddmtechdev\user\models\ResetPasswordForm;
+use ddmtechdev\user\models\ChangePasswordForm;
+use ddmtechdev\user\models\User;
 
 class AuthController extends Controller
 {
     public function actionLogin()
     {
         $this->layout = 'login.php';
+        if(!Yii::$app->user->isGuest){$this->goHome();}
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goHome();
@@ -23,6 +26,10 @@ class AuthController extends Controller
     public function actionSignup()
     {
         $this->layout = 'signup.php';
+        if(Yii::$app->user->can('admin')){}
+        else if(!Yii::$app->user->isGuest){
+            $this->goHome();
+        }
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             return $this->redirect(['login']);
@@ -39,6 +46,7 @@ class AuthController extends Controller
     public function actionForgotPassword()
     {
         $this->layout = 'login.php';
+        if(!Yii::$app->user->isGuest){$this->goHome();}
         $model = new ForgotPasswordForm();
 
         if ($model->load(Yii::$app->request->post())) {
@@ -56,6 +64,7 @@ class AuthController extends Controller
     public function actionResetPassword($token)
     {
         $this->layout = 'login.php';
+        if(!Yii::$app->user->isGuest){$this->goHome();}
         $model = new ResetPasswordForm();
 
         if (!$model->validateToken($token)) {
@@ -70,5 +79,31 @@ class AuthController extends Controller
         return $this->render('reset-password', [
             'model' => $model,
         ]);
+    }
+
+    public function actionChangePassword($id = null)
+    {
+        if ($id !== null && Yii::$app->user->can('admin')) { 
+            // Admin changing another user's password
+            $user = User::findOne($id);
+            $isAdmin = true;
+        } else {
+            // Regular user changing their own password
+            $user = Yii::$app->user->identity;
+            $isAdmin = false;
+        }
+
+        if (!$user) {
+            throw new NotFoundHttpException('User not found.');
+        }
+
+        $model = new ChangePasswordForm($user, $isAdmin);
+
+        if ($model->load(Yii::$app->request->post()) && $model->changePassword()) {
+            Yii::$app->session->setFlash('success', 'Password changed successfully.');
+            return $this->redirect(['profile']); // Redirect after success
+        }
+
+        return $this->render('change-password', ['model' => $model, 'isAdmin' => $isAdmin]);
     }
 }

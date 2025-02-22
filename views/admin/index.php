@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 Actions
                                             </button>
                                             <ul class="dropdown-menu">
-                                                <li>' . Html::a('Change Password', ['update', "id" => $model->id], ['class' => 'dropdown-item']) . '</li>
+                                                <li>' . Html::a('Change Password', ['auth/change-password', "id" => $model->id], ['class' => 'dropdown-item']) . '</li>
                                                 <li>' . Html::a('Delete', ['delete', "id" => $model->id], [
                                                     'class' => 'dropdown-item',
                                                     'data-confirm' => 'Are you sure you want to delete this user?',
