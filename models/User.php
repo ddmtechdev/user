@@ -25,6 +25,8 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             [['username', 'password_hash', 'email'], 'required'],
+            [['password_reset_token'], 'string', 'max' => 255],
+            [['password_reset_token'], 'safe'],
             [['status'], 'integer'],
             ['email', 'email'],
             [['username', 'email'], 'string', 'max' => 255],
@@ -109,12 +111,12 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function getAuthKey()
     {
-        return null;
+        return $this->auth_key;
     }
 
     public function validateAuthKey($authKey)
     {
-        return false;
+        return $this->auth_key === $authKey;
     }
 
     public function validatePassword($password)

@@ -8,6 +8,7 @@ class LoginForm extends Model
 {
     public $username;
     public $password;
+    public $rememberMe = true;
 
     const STATUS_BLOCKED = 0;
 
@@ -16,6 +17,7 @@ class LoginForm extends Model
         return [
             [['username', 'password'], 'required'],
             ['password', 'validatePassword'],
+            ['rememberMe', 'boolean'],
         ];
     }
 
@@ -38,7 +40,8 @@ class LoginForm extends Model
                 return false; // Stop login process
             }
 
-            return Yii::$app->user->login($model);
+            return Yii::$app->user->login($model, $this->rememberMe ? 3600 * 24 * 5 : 0);
+            // return Yii::$app->user->login($model);
         }
 
         return false;

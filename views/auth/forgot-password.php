@@ -19,18 +19,11 @@ $this->title = 'Login';
           </div>
           <div class="col-md-12">
             <div data-mdb-input-init class="form-outline">
-              <?= $form->field($model, 'username')->textInput() ?>
+                <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
             </div>
-            <div data-mdb-input-init class="form-outline">
-              <?= $form->field($model, 'password')->passwordInput() ?>
-            </div>
-            <div class="d-flex justify-content-between align-items-center">
-              <?= $form->field($model, 'rememberMe')->checkbox() ?>
-              <?= Html::a('Forgot password?', ['/user/auth/forgot-password'], ['class' => 'text-body']) ?>
-            </div>
-            <div class="text-center text-lg-start">
-              <?= Html::submitButton('Login', ['class' => 'btn btn-primary px-4']) ?>
-              <p class="small fw-bold mt-2 pt-1 pb-3">Don't have an account? <?= \yii\helpers\Html::a('Register', 'signup', ['class' => 'link-danger']) ?></p>
+            <div class="text-center text-lg-start mt-4 pt-2">
+              <?= Html::submitButton('Send Reset Link', ['class' => 'btn btn-primary px-4']) ?>
+              <p class="small fw-bold mt-2 pt-1 pb-3">Go <?= \yii\helpers\Html::a('Back', 'login', ['class' => 'link-primary']) ?> to login page</p>
             </div>
           </div>
         </div>
