@@ -1,5 +1,6 @@
 <?php
 namespace ddmtechdev\user\models;
+use ddmtechdev\auditlog\behaviors\AuditLogBehavior;
 
 use Yii;
 use yii\base\Model;
@@ -18,6 +19,12 @@ class LoginForm extends Model
             [['username', 'password'], 'required'],
             ['password', 'validatePassword'],
             ['rememberMe', 'boolean'],
+        ];
+    }
+    
+    public function behaviors(){
+        return [
+            AuditLogBehavior::class,
         ];
     }
 

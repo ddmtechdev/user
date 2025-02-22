@@ -39,7 +39,7 @@
 "repositories": [
     {
         "type": "vcs",
-        "url": "https://github.com/ddmtechdev/rbac.git"
+        "url": "https://github.com/ddmtechdev/user.git"
     }
     ...
 ]
