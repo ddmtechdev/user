@@ -9,7 +9,7 @@ $this->title = 'Login';
   <div class="container-fluid h-custom">
     <div class="pt-5 pb-5">
       <div class="col-md-12 col-lg-12 col-xl-4 offset-xl-4 p-3 card shadow-lg" style="border-top: 7px solid #0d6efd">
-        <h6>Change Password <?php if((Yii::$app->user->can('admin') || Yii::$app->user->can('manageUser')) && Yii::$app->request->get('id')){
+        <h6>Change Password <?php if(Yii::$app->user->can('manageUsers') && Yii::$app->request->get('id')){
             echo 'for: '. $model->getUsername(Yii::$app->request->get('id'));
         } ?></h6><hr>
         <div class="row">

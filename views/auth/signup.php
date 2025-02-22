@@ -1,4 +1,5 @@
 <?php
+
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 
@@ -86,7 +87,11 @@ $this->title = 'Account Registration';
 
             <div class="col-12 mt-4">
                 <?= Html::submitButton('Register', ['class' => 'btn btn-success px-4']) ?>
-                <p class="small fw-bold mt-2 pt-1 pb-3">Already have an account? <?= \yii\helpers\Html::a('Login', 'login', ['class' => 'link-danger']) ?></p>
+                <?php if(Yii::$app->user->can('manageUsers')) : ?>
+                    <?= Html::a('Cancel', '/user/admin', ['class' => 'btn btn-secondary']) ?>
+                <?php else : ?>
+                    <p class="small fw-bold mt-2 pt-1 pb-3">Already have an account? <?= Html::a('Login', 'login', ['class' => 'link-danger']) ?></p>
+                <?php endif; ?>
             </div>
 
             <?php ActiveForm::end(); ?>
