@@ -31,7 +31,18 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ? '<span class="badge bg-success">Active</span>' 
                                 : '<span class="badge bg-danger">Blocked</span>';
                         }
-                    ],[
+                    ],
+                    [
+                        'attribute' => 'granted_access',
+                        'label' => 'Granted Access?',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->role
+                                ? Html::a('Yes', ['/rbac/auth-assignment/update', "user_id" => $model->id], ['class' => 'btn btn-primary btn-sm']) 
+                                : Html::a('No', ['/rbac/auth-assignment/create', "user_id" => $model->id], ['class' => 'btn btn-secondary btn-sm']);
+                        }
+                    ],
+                    [
                         'class' => 'yii\grid\ActionColumn',
                         'template' => '{actions}',
                         'buttons' => [
@@ -39,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 $blockLabel = $model->status == 10 ? 'Block' : 'Unblock';
                                 // $blockClass = $model->status == 10 ? 'text-warning' : 'text-success';
                                 // $blockIcon = $model->status == 10 ? 'fa-ban' : 'fa-check';
-                                $blockUrl = ['block', 'id' => $model->id];
+                                $blockUrl =  $model->status == 10 ? ['block', 'id' => $model->id] : ['unblock', 'id' => $model->id];
                     
                                 return '<div class="dropdown">
                                             <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">

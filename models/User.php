@@ -11,6 +11,7 @@ class User extends ActiveRecord implements IdentityInterface
     public $old_password;
     public $new_password;
     public $confirm_password;
+    public $granted_access;
 
     const STATUS_ACTIVE = 10;
     const STATUS_BLOCKED = 0;
