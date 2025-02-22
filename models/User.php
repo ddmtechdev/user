@@ -13,8 +13,9 @@ class User extends ActiveRecord implements IdentityInterface
     public $confirm_password;
     public $granted_access;
 
-    const STATUS_ACTIVE = 10;
     const STATUS_BLOCKED = 0;
+    const STATUS_INACTIVE = 1;
+    const STATUS_ACTIVE = 10;
 
     public static function tableName()
     {
@@ -25,15 +26,12 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             [['username', 'password_hash', 'email'], 'required'],
-            [['password_reset_token'], 'string', 'max' => 255],
             [['password_reset_token'], 'safe'],
             [['status'], 'integer'],
             ['email', 'email'],
-            [['username', 'email'], 'string', 'max' => 255],
-
+            [['password_reset_token','verification_token','username', 'email'], 'string', 'max' => 255],
             ['username', 'unique', 'on' => self::SCENARIO_DEFAULT], 
             ['email', 'unique', 'on' => self::SCENARIO_DEFAULT], 
-
             [['old_password'], 'required', 'when' => function ($model) {
                 return !empty($model->new_password);
             }, 'whenClient' => "function (attribute, value) {
@@ -148,9 +146,34 @@ class User extends ActiveRecord implements IdentityInterface
 
         return false;
     }
-    
+
     public function generateAuthKey()
     {
         $this->auth_key = Yii::$app->security->generateRandomString();
+    }
+    
+    public function generateEmailVerificationToken()
+    {
+        $this->verification_token = Yii::$app->security->generateRandomString() . '_' . time();
+    }
+
+    public function verifyEmail()
+    {
+        $this->status = self::STATUS_ACTIVE;
+        $this->verification_token = null;
+        return $this->save(false);
+    }
+
+    public function getStatusLabel(){
+        if($this->status == self::STATUS_ACTIVE){
+            return '<span class="badge bg-success">Active</span>';
+        }
+        else if($this->status == self::STATUS_INACTIVE){
+            return '<span class="badge bg-secondary">Not Verified</span>';
+        }
+        else if($this->status == self::STATUS_BLOCKED){
+            return '<span class="badge bg-danger">Blocked</span>';
+        }
+        return '';
     }
 }

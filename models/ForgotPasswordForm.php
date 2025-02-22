@@ -35,7 +35,7 @@ class ForgotPasswordForm extends Model
         // Send email
         // echo Yii::$app->params['adminEmail'];
         // exit;
-        return Yii::$app->mailer->compose('@vendor/ddmtechdev/user/views/auth/mail/passwordReset', ['user' => $user])
+        return Yii::$app->mailer->compose(['html' => 'passwordReset'], ['user' => $user])
             ->setFrom(Yii::$app->params['adminEmail'])
             ->setTo($this->email)
             ->setSubject('Password Reset Request')

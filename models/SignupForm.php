@@ -50,6 +50,13 @@ class SignupForm extends Model
         $user->email = $this->email;
         $user->setPassword($this->password);
         // $user->generateAuthKey();
+        $user->generateEmailVerificationToken(); 
+        $user->status = User::STATUS_INACTIVE;
+
+        if ($user->save()) {
+            $this->sendEmailVerification($user);
+            return $user;
+        }
 
         if ($user->save()) {
             $profile = new Profile();
@@ -71,15 +78,24 @@ class SignupForm extends Model
             return $profile->save() ? $user : null;
         }else{
             if ($user->errors) {
-                if ($user->errors['username']) {
+                if (ArrayHelper::keyExists('username', $user->errors)) {
                     $this->addError('username', 'This username is already taken.');
                 }
-                if ($user->errors['email']) {
+                if (ArrayHelper::keyExists('email', $user->errors)) {
                     $this->addError('email', 'This email is already registered.');
                 }
             }
         }
 
         return null;
+    }
+    
+    protected function sendEmailVerification($user)
+    {
+        return Yii::$app->mailer->compose(['html' => 'emailVerify'], ['user' => $user])
+            ->setFrom([Yii::$app->params['supportEmail'] => 'Admin'])
+            ->setTo($user->email)
+            ->setSubject('Email Verification')
+            ->send();
     }
 }

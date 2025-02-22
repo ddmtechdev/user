@@ -27,9 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'status',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->status == 10 
-                                ? '<span class="badge bg-success">Active</span>' 
-                                : '<span class="badge bg-danger">Blocked</span>';
+                            return $model->statusLabel;
                         }
                     ],
                     [

@@ -33,14 +33,19 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->validate()) {
-            $model = User::findOne(['username' => $this->username]);
+            $user = User::findOne(['username' => $this->username]);
 
-            if ($model && $model->status == LoginForm::STATUS_BLOCKED) {
+            if ($user && $user->status == LoginForm::STATUS_BLOCKED) {
                 $this->addError('username', 'Your account is blocked. Please contact the administrator.');
                 return false; // Stop login process
             }
 
-            return Yii::$app->user->login($model, $this->rememberMe ? 3600 * 24 * 5 : 0);
+            if ($user && $user->status == User::STATUS_INACTIVE) {
+                $this->addError('username', 'Your account is not verified. Please check your email.');
+                return false;
+            }
+
+            return Yii::$app->user->login($user, $this->rememberMe ? 3600 * 24 * 5 : 0);
             // return Yii::$app->user->login($model);
         }
 

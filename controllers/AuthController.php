@@ -106,4 +106,18 @@ class AuthController extends Controller
 
         return $this->render('change-password', ['model' => $model, 'isAdmin' => $isAdmin]);
     }
+    
+    public function actionVerifyEmail($token)
+    {
+        $user = User::findOne(['verification_token' => $token, 'status' => User::STATUS_INACTIVE]);
+
+        if (!$user) {
+            Yii::$app->session->setFlash('error', 'Invalid or expired verification link.');
+            return $this->redirect(['auth/login']);
+        }
+
+        $user->verifyEmail();
+        Yii::$app->session->setFlash('success', 'Your email has been verified. You can now log in.');
+        return $this->redirect(['auth/login']);
+    }
 }
