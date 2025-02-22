@@ -9,6 +9,8 @@ class LoginForm extends Model
     public $username;
     public $password;
 
+    const STATUS_BLOCKED = 0;
+
     public function rules()
     {
         return [
@@ -29,7 +31,14 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->validate()) {
-            return Yii::$app->user->login(User::findOne(['username' => $this->username]));
+            $model = User::findOne(['username' => $this->username]);
+
+            if ($model && $model->status == LoginForm::STATUS_BLOCKED) {
+                $this->addError('username', 'Your account is blocked. Please contact the administrator.');
+                return false; // Stop login process
+            }
+
+            return Yii::$app->user->login($model);
         }
 
         return false;

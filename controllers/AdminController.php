@@ -6,9 +6,37 @@ use ddmtechdev\user\models\User;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 class AdminController extends Controller
-{
+{public function behaviors()
+    {
+        return array_merge(
+            parent::behaviors(),
+            [
+                'verbs' => [
+                    'class' => VerbFilter::className(),
+                    'actions' => [
+                        'delete' => ['POST'],
+                    ],
+                ],
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'allow' => true,
+                            'roles' => ['admin'], // Only allow admin to access all actions
+                        ],
+                        [
+                            'allow' => false, // Deny access to others
+                        ],
+                    ],
+                ],
+            ]
+        );
+    }
+    
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
