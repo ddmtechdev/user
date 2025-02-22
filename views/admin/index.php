@@ -38,8 +38,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->role
-                                ? Html::a('Yes', ['/rbac/auth-assignment/update', "user_id" => $model->id], ['class' => 'btn btn-primary btn-sm']) 
-                                : Html::a('No', ['/rbac/auth-assignment/create', "user_id" => $model->id], ['class' => 'btn btn-secondary btn-sm']);
+                                ? Html::a('Yes', ['/rbac/auth-assignment/grant-access', "user_id" => $model->id], ['class' => 'btn btn-primary btn-sm']) . 
+                                  Html::a('Revoke', ['/rbac/auth-assignment/revoke-access', "user_id" => $model->id], [
+                                    'class' => 'btn btn-warning btn-sm ms-1',
+                                    'data-confirm' => 'Are you sure you want to revoke this user’s access?',
+                                    'data-method' => 'post'
+                                  ])
+                                : Html::a('No', ['/rbac/auth-assignment/grant-access', "user_id" => $model->id], ['class' => 'btn btn-secondary btn-sm']);
                         }
                     ],
                     [
