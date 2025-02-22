@@ -21,8 +21,10 @@ $this->title = 'Login';
             <div data-mdb-input-init class="form-outline">
               <?= $form->field($model, 'username')->textInput() ?>
             </div>
-            <div data-mdb-input-init class="form-outline">
-              <?= $form->field($model, 'password')->passwordInput() ?>
+            <div class="position-relative">
+              <?= $form->field($model, 'password', [
+                'template' => '{label}{input}<i id="togglePassword" class="fa fa-eye password-toggle float-end"></i>{error}{hint}'
+              ])->passwordInput(['id' => 'passwordInput', 'class' => 'form-control pr-5']) ?>
             </div>
             <div class="d-flex justify-content-between align-items-center">
               <?= $form->field($model, 'rememberMe')->checkbox() ?>
@@ -39,3 +41,26 @@ $this->title = 'Login';
   </div>
   <?php ActiveForm::end(); ?> 
 </section>
+<style>
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 52px; 
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    color: #888;
+}
+.password-toggle:hover {
+    color: #333;
+}
+</style>
+
+<script>
+document.getElementById('togglePassword').addEventListener('click', function () {
+    let passwordInput = document.getElementById('passwordInput');
+    this.classList.toggle('fa-eye');
+    this.classList.toggle('fa-eye-slash');
+    passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
+});
+</script>
