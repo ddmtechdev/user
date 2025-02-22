@@ -20,12 +20,6 @@ class LoginForm extends Model
             ['rememberMe', 'boolean'],
         ];
     }
-    
-    public function behaviors(){
-        return [
-            AuditLogBehavior::class,
-        ];
-    }
 
     public function validatePassword($attribute, $params)
     {
