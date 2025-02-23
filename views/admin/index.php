@@ -8,7 +8,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="container mt-3">
     <div class="">
-        <h5 class="mb-3"><i class="fas fa-user-cog"></i> User Management</h5>
+        <h5 class="mb-3">User Management</h5>
         <p>
             <?= Html::a('+ Create User', ['auth/signup'], ['class' => 'btn btn-success btn-sm']) ?>
             <?= Html::a('Roles & Permissions', ['/rbac/auth-item'], ['class' => 'btn btn-secondary btn-sm']) ?>

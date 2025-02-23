@@ -54,11 +54,6 @@ class SignupForm extends Model
         $user->status = User::STATUS_INACTIVE;
 
         if ($user->save()) {
-            $this->sendEmailVerification($user);
-            return $user;
-        }
-
-        if ($user->save()) {
             $profile = new Profile();
             $profile->user_id = $user->id;
             $profile->first_name = $this->first_name;
@@ -74,8 +69,13 @@ class SignupForm extends Model
             $profile->region = $this->region;
             $profile->contact_number = $this->contact_number;
             $profile->email = $this->email;
-
-            return $profile->save() ? $user : null;
+            if($profile->save()){
+                $this->sendEmailVerification($user);
+                return $user;
+            }
+            else{
+                return null;
+            }
         }else{
             if ($user->errors) {
                 if (ArrayHelper::keyExists('username', $user->errors)) {
