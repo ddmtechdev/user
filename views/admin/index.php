@@ -7,14 +7,26 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="container mt-3">
-    <div class="">
-        <h5 class="mb-3">User Management</h5>
-        <p>
-            <?= Html::a('+ Create User', ['auth/signup'], ['class' => 'btn btn-success btn-sm']) ?>
-            <?= Html::a('Roles & Permissions', ['/rbac/auth-item'], ['class' => 'btn btn-secondary btn-sm']) ?>
-            <?= Html::a('Rules', ['/rbac/auth-rule'], ['class' => 'btn btn-secondary btn-sm']) ?>
-        </p>
+    <h5 class="mb-3"><?= $this->title ?></h5>
+    <div class="d-flex align-items-center gap-1 flex-wrap mb-3">
+        <?= Html::a('+ Create User', ['auth/signup'], ['class' => 'btn btn-success btn-sm']) ?>
+        <?= Html::a('Roles & Permissions', ['/rbac/auth-item'], ['class' => 'btn btn-secondary btn-sm']) ?>
+        <?= Html::a('Rules', ['/rbac/auth-rule'], ['class' => 'btn btn-secondary btn-sm']) ?>
+
+        <!-- Fix for dropdown alignment -->
+        <div class="btn-group">
+            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Location
+            </button>
+            <ul class="dropdown-menu">
+                <li><?= Html::a('Regions', ['regions/index'], ['class' => 'dropdown-item']) ?></li>
+                <li><?= Html::a('Provinces', ['provinces/index'], ['class' => 'dropdown-item']) ?></li>
+                <li><?= Html::a('Cities', ['cities/index'], ['class' => 'dropdown-item']) ?></li>
+                <li><?= Html::a('Barangays', ['barangays/index'], ['class' => 'dropdown-item']) ?></li>
+            </ul>
+        </div>
     </div>
+
     <div class="card shadow-lg" style="border-top: 7px solid #747474;">
         <div class="card-body">
             <?= GridView::widget([
