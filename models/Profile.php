@@ -18,11 +18,11 @@ class Profile extends ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'first_name', 'last_name', 'birthdate', 'gender', 'city', 'region', 'email', 'contact_number'], 'required'],
-            [['barangay','middle_name','street'], 'safe'],
+            [['user_id', 'first_name', 'last_name', 'birthdate', 'gender','barangay_id', 'city_id', 'region_id', 'email', 'contact_number'], 'required'],
+            [['middle_name','street', 'province_id'], 'safe'],
             [['user_id'], 'integer'],
             [['birthdate'], 'date', 'format' => 'php:Y-m-d'],
-            [['first_name', 'middle_name', 'last_name', 'suffix', 'street', 'barangay', 'city', 'province', 'region', 'email', 'contact_number'], 'string', 'max' => 255],
+            [['first_name', 'middle_name', 'last_name', 'suffix', 'street', 'barangay_id', 'city_id', 'province_id', 'region_id', 'email', 'contact_number'], 'string', 'max' => 255],
             [['gender'], 'in', 'range' => ['Male', 'Female', 'Other']],
             [['email'], 'email'],
             [['contact_number'], 'match', 'pattern' => '/^[0-9\-\(\)\/\+\s]*$/'],

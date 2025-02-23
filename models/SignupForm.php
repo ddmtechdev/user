@@ -20,22 +20,33 @@ class SignupForm extends Model
     public $birthdate;
     public $gender;
     public $street;
-    public $barangay;
-    public $city;
-    public $province;
-    public $region;
+    public $barangay_id;
+    public $city_id;
+    public $province_id;
+    public $region_id;
     public $contact_number;
 
     public function rules()
     {
         return [
-            [['username', 'email', 'password', 'first_name', 'last_name', 'birthdate', 'gender', 'city', 'region', 'contact_number'], 'required'],
-            [['barangay','middle_name','province','street','suffix'], 'string'],
+            [['username', 'email', 'password', 'first_name', 'last_name', 'birthdate', 'gender','barangay_id', 'city_id', 'region_id', 'contact_number'], 'required'],
+            [['middle_name','province_id','street','suffix'], 'string'],
             [['email'], 'email'],
             [['password'], 'string', 'min' => 6],
             [['birthdate'], 'date', 'format' => 'php:Y-m-d'],
             [['gender'], 'in', 'range' => ['Male', 'Female', 'Other']],
             [['contact_number'], 'match', 'pattern' => '/^[0-9\-\(\)\/\+\s]*$/'],
+        ];
+    }
+    
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'region_id' => 'Region',
+            'province_id' => 'Province',
+            'city_id' => 'City',
+            'barangay_id' => 'Barangay',
         ];
     }
 
@@ -63,10 +74,10 @@ class SignupForm extends Model
             $profile->birthdate = $this->birthdate;
             $profile->gender = $this->gender;
             $profile->street = $this->street;
-            $profile->barangay = $this->barangay;
-            $profile->city = $this->city;
-            $profile->province = $this->province;
-            $profile->region = $this->region;
+            $profile->barangay_id = $this->barangay_id;
+            $profile->city_id = $this->city_id;
+            $profile->province_id = $this->province_id;
+            $profile->region_id = $this->region_id;
             $profile->contact_number = $this->contact_number;
             $profile->email = $this->email;
             if($profile->save()){
