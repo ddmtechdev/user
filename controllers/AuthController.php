@@ -3,6 +3,7 @@ namespace ddmtechdev\user\controllers;
 
 use Yii;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 use ddmtechdev\user\models\LoginForm;
 use ddmtechdev\user\models\SignupForm;
 use ddmtechdev\user\models\ForgotPasswordForm;
