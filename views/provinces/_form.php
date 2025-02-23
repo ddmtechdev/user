@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
+use ddmtechdev\user\components\DependentDropdown;
+use kartik\select2\Select2;
 
 /** @var yii\web\View $this */
 /** @var ddmtechdev\rbac\models\AuthRule $model */
@@ -17,7 +19,12 @@ use yii\bootstrap5\ActiveForm;
             <div class="card-body">
                 <?php $form = ActiveForm::begin(); ?>
 
-                <?= $form->field($model, 'region_id')->textInput() ?>
+                <!-- Region Select2 -->
+                <?= $form->field($model, 'region_id')->widget(Select2::class, [
+                    'data' => DependentDropdown::getRegions(),
+                    'options' => ['placeholder' => 'Select Region', 'id' => 'region-dropdown'],
+                    'pluginOptions' => ['allowClear' => true]
+                ]) ?>
 
                 <?= $form->field($model, 'province_name')->textInput(['maxlength' => true]) ?>
 

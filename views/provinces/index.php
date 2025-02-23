@@ -29,7 +29,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     'tableOptions' => ['class' => 'table table-sm table-bordered table-hover'],
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
-                        'region_id',
+                        [
+                            'attribute' => 'region_id',
+                            'value' => 'region.region_name'
+                        ],
                         'province_name',
                         [
                             'class' => ActionColumn::className(),

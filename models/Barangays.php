@@ -56,11 +56,16 @@ class Barangays extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * Gets query for [[City]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
+    public function getProvince()
+    {
+        return $this->hasOne(Provinces::class, ['id' => 'province_id']);
+    }
+
+    public function getRegion()
+    {
+        return $this->hasOne(Regions::class, ['id' => 'region_id']);
+    }
+
     public function getCity()
     {
         return $this->hasOne(Cities::class, ['id' => 'city_id']);

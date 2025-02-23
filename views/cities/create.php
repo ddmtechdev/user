@@ -10,7 +10,7 @@ $this->params['breadcrumbs'][] = ['label' => 'User Management', 'url' => ['/user
 $this->params['breadcrumbs'][] = ['label' => 'Cities', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="barangays-create">
+<div class="cities-create">
 
     <?= $this->render('_form', [
         'model' => $model,
