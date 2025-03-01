@@ -3,7 +3,7 @@
 /** @var \yii\web\View $this */
 /** @var string $content */
 
-use common\widgets\Alert;
+use ddmtechdev\user\widgets\Alert;
 use ddmtechdev\user\assets\AppAsset;
 use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
